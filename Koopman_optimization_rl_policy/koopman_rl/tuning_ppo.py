@@ -69,7 +69,7 @@ def generate_pseudo_data(state, action, num_steps=10):
         curr_action = ppo.policy.predict(obs_tensor)[0].numpy()
     return np.array(pseudo_states), np.array(pseudo_actions)
 
-# 奖励函数（简化：鼓励前进）
+# 奖励函数
 def compute_reward(state):
     lin_vel_x = state[7]  # 前进速度
     return lin_vel_x - 0.01 * np.linalg.norm(state[28:40])  # 减小关节速度惩罚

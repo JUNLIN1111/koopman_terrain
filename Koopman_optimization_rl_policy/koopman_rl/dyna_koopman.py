@@ -11,23 +11,23 @@ from stable_baselines3 import PPO
 import pykoopman as pk
 import os
 
-# Dyna 框架相关
+# Dyna framework
 class KoopmanDynamicsModel:
     def __init__(self, koopman_model=None, encoder=None, decoder=None):
-        self.koopman_model = koopman_model  # Koopman 模型
-        self.encoder = encoder  # 硬地的 encoder
-        self.decoder = decoder  # 硬地的 decoder
+        self.koopman_model = koopman_model  # Koopman model
+        self.encoder = encoder  # hard的 encoder
+        self.decoder = decoder  # hard的 decoder
         self.A = None  # Koopman 矩阵 A
         self.B = None  # Koopman 矩阵 B
 
     def fit(self, observations):
-        # 收集的数据：observations 包含状态 (40 维) 和控制 (12 维)
+        # observations 包含状态 (40 维) 和控制 (12 维)
         if self.koopman_model is None:
             # 初始化新的 Koopman 模型，只拟合 A 和 B
             dlk_regressor = pk.regression.NNDMDc(
                 mode='Dissipative_control',
-                n=40,  # 状态维度（[2025-04-20, 21:35]）
-                m=12,  # 控制维度
+                n=40,  
+                m=12, 
                 dt=0.002,
                 config_encoder=dict(input_size=40, hidden_sizes=[512, 256], output_size=128, activations='relu'),
                 config_decoder=dict(input_size=128, hidden_sizes=[256, 512], output_size=40, activations='relu'),
@@ -87,7 +87,7 @@ decoder.load_state_dict(torch.load("models_hard/decoder_hard_traj_0.pth"))
 # 初始化 Dyna 模型
 dyna_model = KoopmanDynamicsModel(encoder=encoder, decoder=decoder)
 
-# 从状态构造 PPO 观测（参考 collect_g1_koopman_data.py，[2025-04-20, 15:35]）
+# 从状态构造 PPO 观测（参考 collect_g1_koopman_data.py
 def get_ppo_obs(state, action, counter):
     q = state[16:28]
     dq = state[28:40]
