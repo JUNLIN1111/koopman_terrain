@@ -1,0 +1,28 @@
+config_decoder:
+  activations: relu
+  hidden_sizes:
+  - 256
+  - 256
+  - 256
+  - 256
+  - 256
+  input_size: 128
+  output_size: 40
+config_encoder:
+  activations: relu
+  hidden_sizes:
+  - 256
+  - 256
+  - 256
+  - 256
+  - 256
+  input_size: 40
+  output_size: 128
+dt: 0.002
+include_state: false
+lbfgs: false
+look_forward: 1
+m: 12
+mode: Dissipative_control
+n: 40
+std_koopman: 0.1
